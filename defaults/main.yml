@@ -1,4 +1,5 @@
 ---
+local_gpg_keyrings_path: /usr/local/share/keyrings
 vscode_local_raw_key_path: "/tmp/vscode_raw.gpg"
 vscode_apt_repository_architecture_key: amd64
 vscode_apt_repository_distribution: stable

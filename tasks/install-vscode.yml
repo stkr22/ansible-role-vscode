@@ -1,0 +1,46 @@
+---
+- name: Setting key names and helper variables.
+  ansible.builtin.set_fact:
+    local_processed_key_path: "{{ local_gpg_keyrings_path }}/vscode.gpg"
+
+- name: Setting repo reference.
+  ansible.builtin.set_fact:
+    apt_repository_reference: "{{ vscode_apt_repository_url }} {{ vscode_apt_repository_distribution }} {{ vscode_apt_repository_postfix }}"
+
+- name: Create key directory if not exists.
+  become: yes
+  file:
+    path: "{{ local_gpg_keyrings_path }}"
+    state: directory
+    mode: '0755'
+
+- name: Checking if key already exists.
+  stat:
+    path: "{{ local_processed_key_path }}"
+  register: local_processed_key_check
+
+- name: "Get raw Microsoft gpg key from url"
+  ansible.builtin.get_url:
+    url: https://packages.microsoft.com/keys/microsoft.asc
+    dest: "{{ vscode_local_raw_key_path }}"
+    mode: 0644
+  when:
+    - not local_processed_key_check.stat.exists
+
+- name: "Dearmor Microsoft gpg key."
+  become: yes
+  ansible.builtin.shell:
+    cmd: "cat {{ vscode_local_raw_key_path }} | gpg --dearmor > {{ local_processed_key_path }}"
+  when:
+    - not local_processed_key_check.stat.exists
+
+- name: "Add VsCode Repository to apt."
+  become: yes
+  ansible.builtin.apt_repository:
+    repo: "deb [arch={{ vscode_apt_repository_architecture_key }} signed-by={{ local_processed_key_path }}] {{ apt_repository_reference }}"
+    filename: "vscode"
+
+- name: "Install VsCode."
+  become: yes
+  ansible.builtin.apt:
+    name: "code"

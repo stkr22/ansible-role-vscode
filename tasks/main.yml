@@ -1,0 +1,6 @@
+---
+- name: Run VsCode install.
+  ansible.builtin.import_tasks: install-vscode.yml
+
+- name: Configure VsCode.
+  ansible.builtin.import_tasks: config-vscode.yml

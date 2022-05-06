@@ -1,0 +1,10 @@
+---
+vscode_local_raw_key_path: "/tmp/vscode_raw.gpg"
+vscode_apt_repository_architecture_key: amd64
+vscode_apt_repository_distribution: stable
+vscode_apt_repository_postfix: main
+vscode_apt_key_url: "https://packages.microsoft.com/keys/microsoft.asc"
+vscode_apt_repository_url: "https://packages.microsoft.com/repos/code"
+vscode_extensions: []
+vscode_config: {}
+vscode_keybindings: {}

@@ -1,0 +1,19 @@
+galaxy_info:
+  author: 'stkr22'
+  role_name: 'vscode'
+  description: Use this role to quickly install and configure vscode.
+  company: your company (optional)
+  license: 'GNU General Public License v3'
+  min_ansible_version: '2.0'
+  platforms:
+    - name: Ubuntu
+      versions:
+        - focal
+        - bionic
+        - jammy
+  galaxy_tags:
+    - vscode
+    - microsoft
+    - application
+
+dependencies: []
